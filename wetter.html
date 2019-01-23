@@ -264,7 +264,7 @@
     a=document.getElementById("form1");
     theName=a.elements["date"].value;
 
-    Plotly.d3.csv('file:///C:/Users/Hubert/bach_thesis/datasets/final_concat_working.csv', function(err, rows){
+    Plotly.d3.csv('https://hubertbaginski.github.io//open_data_vis//data//final_concat_working.csv', function(err, rows){
         function unpack(rows, key) {
             return rows.map(function(row){
               return row[key]; });
