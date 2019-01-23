@@ -52,9 +52,8 @@ function closeNav() {
 
   var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-  }).addTo(map3);
+  });
 
-/*
   var black =  L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
               attribution: 'Stamen'
             })
@@ -66,7 +65,6 @@ L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
           L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
                       attribution: 'Stamen'
                     }).addTo(map2);
-*/
 
 function marker1(array){
   for (var i = 0; i < array.length; i++) {
@@ -100,7 +98,7 @@ fetch('https://hubertbaginski.github.io//open_data_vis//data///wlanpoints.json')
         }
       }).addTo(map3))
 </script>
-<div id="legend_map2" class="legend5" style="z-index=80;">
+<div id="legend_map2" class="legend5">
   <h4 style="font-family: segoe ui light;">Number of AP</h4>
   <div style="font-family: segoe ui;"><span style='background-color: #800080'></span>> 18</div>
     <div style="font-family: segoe ui;"><span style='background-color: #A04060'></span>16 - 18</div>
