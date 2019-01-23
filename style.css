@@ -1,0 +1,196 @@
+.top{
+   position:absolute;
+   left:-40px; right:0;
+   height:80px;
+}
+.left{
+   position:absolute;
+   left:-40px; top:80px; bottom:0;
+}
+
+.main{
+   position: absolute;
+   left:275px; top:80px; right:0; bottom:0;
+}
+
+.main_text{
+   position: absolute;
+   left:275px; top:20px; right:20; bottom:0;
+}
+
+.main2{
+   position: absolute;
+   left:1150px; top:80px; right:0; bottom:0; float:right;
+}
+
+.main2_text{
+   position: absolute;
+   left:1150px; top:20px; right:0; bottom:0;
+}
+
+.main3{
+   position: absolute;
+   left:1150px; top:580px; right:0; bottom:0; float:right;
+}
+
+.main3_text{
+   position: absolute;
+   left:1150px; top:520px; right:0; bottom:0;
+}
+
+.main4{
+   position: absolute;
+   left:275px; top:580px; right:0; bottom:0;
+}
+
+.main4_text{
+   position: absolute;
+   left:275px; top:520px; right:0; bottom:0;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+.sidenav {padding-top: 15px;}
+.sidenav a {font-size: 18px;}
+}
+
+.legend {
+  background-color: #DBDBDB;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  padding: 5px;
+  position: absolute;
+  left:900px; top:350px; bottom:500;
+  z-index: 1;
+}
+
+.legend h4 {
+  margin: 0 0 3px;
+}
+
+.legend div span {
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  margin-right: 5px;
+  width: 10px;
+  border: 2px solid black;
+}
+.legend3 {
+  background-color: #DBDBDB;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  padding: 5px;
+  position: absolute;
+  left:865px; top:420px; bottom:500;
+  z-index: 1;
+}
+
+.legend3 h4 {
+  margin: 0 0 3px;
+}
+
+.legend3 div span {
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  margin-right: 5px;
+  width: 10px;
+  border: 2px solid black;
+}
+
+.legend5 {
+  background-color: #DBDBDB;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  padding: 5px;
+  position: absolute;
+  left:1750px; top:875px; bottom:500;
+  z-index: 1;
+}
+
+.legend5 h4 {
+  margin: 0 0 3px;
+}
+
+.legend5 div span {
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  margin-right: 5px;
+  width: 10px;
+  border: 2px solid black;
+}
+
+.legend1{
+  background-color: #C0C0C0;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  padding: 5px;
+  position: absolute;
+  left:1740px; top:380px; bottom:500;
+  z-index: 1;
+}
+
+.legend1 h4 {
+  margin: 0 0 3px;
+}
+
+.legend1 div span {
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  margin-right: 5px;
+  width: 10px;
+  border: 2px solid black;
+}
+
+.info {
+padding: 6px 8px;
+font: 14px/16px Arial, Helvetica, sans-serif;
+background: white;
+background: rgba(255,255,255,0.8);
+box-shadow: 0 0 15px rgba(0,0,0,0.2);
+border-radius: 5px;
+}
+.info h4 {
+margin: 0 0 5px;
+color: #777;
+}

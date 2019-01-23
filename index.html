@@ -1,9 +1,102 @@
+<!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css">
+  <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+  <script src="../dist/choropleth/dist/choropleth.js"></script>
+  <script src="../dist/leaflet-heat.js"></script>
+  <script src="../dist/leaflet-providers-master/leaflet-providers.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Hello World</h1>
-<p>Did it work?</p>
-<a href="https://hubertbaginski.github.io//open_data_vis//hello.html">Click me</a>
+
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a style="font-family: segoe ui;">Dashboards</a>
+  <a href="https://hubertbaginski.github.io//open_data_vis//index.html" style="font-family: segoe ui light;">Schools</a>
+  <a href="https://hubertbaginski.github.io//open_data_vis//wlan.html" style="font-family: segoe ui light;">WLAN</a>
+  <a href="https://hubertbaginski.github.io//open_data_vis//wetter.html" style="font-family: segoe ui light;">Weather</a>
+  <a href="https://hubertbaginski.github.io//open_data_vis//rent.html" style="font-family: segoe ui light;">Rent Prices</a>
+</div>
+
+<span style="font-size:30px;cursor:pointer" onclick="openNav()" style="font-family: segoe ui;">&#9776; Menu</span>
+<h2 class="main_text"; style="font-family: segoe ui light;">Vienna's School Distribution</h2>
+<div id="map" style="width: 700px; height: 450px; border: thin solid black;" class="main"></div>
+<h2 class="main2_text"; style="font-family: segoe ui light;">Vienna's School Heatmap</h2>
+<div id="map2" style="width: 700px; height: 450px; border: thin solid black;" class="main2"></div>
+
+<div id="legend_map" class="legend">
+  <h4>Schools</h4>
+  <div><span style='background-color: #800080'></span>> 50</div>
+    <div><span style='background-color: #A04060'></span>35-49</div>
+    <div><span style='background-color: #C08040'></span>28-34</div>
+    <div><span style='background-color: #DFBF20'></span>16-27</div>
+    <div><span style='background-color: #FFFF00'></span>< 16</div>
+</div>
+
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+
+var map = L.map('map').setView([48.20801277736036,16.371379750152176], 11);
+
+var map2 = L.map('map2').setView([48.20801277736036,16.371379750152176], 12);
+
+var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);
+
+
+var tiles2 = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map2);
+
+L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
+          attribution: 'Stamen'
+        }).addTo(map);
+
+
+
+L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
+  attribution: 'Stamen'
+  }).addTo(map2);
+
+var choro;
+var addressPoints = new Array(772);
+fetch('https://hubertbaginski.github.io//open_data_vis//data//school_data.json')
+  .then(res => res.json())
+  .then(data => addressPoints = data)
+  // add it to the map
+  .then(() => L.heatLayer(addressPoints, {radius: 12,blur:20,maxZoom:11}).addTo(map2))
+
+
+    fetch('https://hubertbaginski.github.io//open_data_vis//data//geojson_with_schools_per_dist.json')
+      .then(res => res.json())
+      .then(data => choro = data)
+      // add it to the map
+      .then(() => L.choropleth(choro, {
+          valueProperty: 'num_schools',
+          scale: ['yellow', 'purple'],
+          steps: 5,
+          mode: 'q',
+          style: {
+            color: '#fff',
+            weight: 1,
+            fillOpacity: 1
+          },
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup(feature.properties.BEZNR + '. District' + '<br>' + '<b>' + feature.properties.NAMEK + '</b>' + '<br>'+ feature.properties.num_schools.toLocaleString() + ' Schools')
+          }
+        }).addTo(map))
+
+</script>
 </body>
 </html>
