@@ -13,5 +13,557 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-</body>
-</html>
+  <script>
+  function doStuff()
+    {
+      var nameElement = document.getElementById("someInput");
+      var theName = nameElement.value;
+      document.getElementById("someDiv").innerHTML = theName;
+    }
+  </script>
+
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a style="font-family: segoe ui;">Dashboards</a>
+    <a href="https://hubertbaginski.github.io//open_data_vis//index.html" style="font-family: segoe ui light;">Schools</a>
+    <a href="https://hubertbaginski.github.io//open_data_vis//wlan.html" style="font-family: segoe ui light;">WLAN</a>
+    <a href="https://hubertbaginski.github.io//open_data_vis//wetter.html" style="font-family: segoe ui light;">Weather</a>
+    <a href="https://hubertbaginski.github.io//open_data_vis//rent.html" style="font-family: segoe ui light;">Rent Prices</a>
+  </div>
+
+  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+
+  <script>
+  function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+  }
+  function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+  }
+  </script>
+  <h2 class="main_text" style="font-family: segoe ui light;">Austrias Weather Stations</h2>
+  <div id="map" style="width: 700px; height: 450px; border: thin solid black;" class="main"></div>
+
+  <div id="div2" class ="main3"></div>
+
+  <div id="someDiv">
+    <br><p style="font-family: segoe ui light;">Data available from:</p>
+    <p style="font-family: segoe ui light;"><b>11-07</b> until <b>28-11-2018</b></p>
+  </div>
+  <form id="form1" style="font-family: segoe ui light;">
+  Date: <input name="date" type="text" size="20">
+  </form>
+  &emsp;&emsp;&emsp;<button onclick="outputdate()" style="font-family: segoe ui light;width:130px">Pick date</button>
+  <br>
+  &emsp;&emsp;&emsp;<button onclick="download()" style="font-family: segoe ui light;width:130px">Download</button>
+  <br>
+  &emsp;&emsp;&emsp;<button onclick="outputlive()" style="font-family: segoe ui light;width:130px">Get Live Data</button>
+
+  <div class="main2" id="bubble">
+    <div class="spacer --small"></div>
+    <div id="bubbleplots">
+      <div class="bubbleplot" data-num="0">
+        <div class="plot" id="plotdiv"></div>
+        <div class="control-row">
+          Station: <select class="stationdata">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var map = L.map('map').setView([47.746652, 14.627470], 7);
+    var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+      L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
+                attribution: 'Stamen'
+              }).addTo(map);
+  //only borders country
+  //fetch('file:///C:/Users/Hubert/bach_thesis/aut_country_border.json')
+  fetch('https://hubertbaginski.github.io//open_data_vis//data//state_geojson.json')
+    .then(res => res.json())
+    .then(data => wetter = data)
+    .then(() => L.geoJson(wetter).addTo(map))
+  var stations = {"coordinates":{"0":[14.1941535,48.2396743],"1":[14.128766,48.0533652],"2":[15.9511119,48.7569663],
+  "3":[16.3563526,48.2484782],"4":[16.5848987032657,48.10499675],"5":[9.7472924,47.5025779],
+  "6":[11.3971372042211,47.26951525],"7":[11.4606079,47.2088279],"8":[12.1692134,47.582996],
+  "9":[13.0464806,47.7981346],"10":[13.6274668,47.535202],"11":[14.1431493,47.520529],"12":[15.3174781,47.7717395],
+  "13":[16.5362158649556,47.83875775],"14":[12.7681269,46.8298662],"15":[15.4399235,46.9805075],
+  "16":[15.9049632,46.8744727],"17":[13.6703863,46.6036645],"18":[14.3397639,46.6452006],
+  "19":[12.9920912,47.1028191],"20":[15.6229118,48.2043985]},
+  "name":{"0":"Linz/Hoersching","1":"Kremsmuenster","2":"Retz","3":"Wien/Hohe Warte",
+  "4":"Wien/Schwechat","5":"Bregenz","6":"Innsbruck","7":"Patscherkofel","8":"Kufstein",
+  "9":"Salzburg","10":"Feuerkogel","11":"Aigen im Ennstal","12":"Mariazell","13":"Eisenstadt",
+  "14":"Lienz","15":"Graz/Flughafen","16":"Bad Gleichenberg","17":"Villacher Alpe",
+  "18":"Klagenfurt/Flughafen","19":"Sonnblick","20":"St. Poelten"},
+  "height":{"0":298,"1":383,"2":320,"3":203,"4":183,"5":424,"6":579,"7":2247,"8":495,"9":430,"10":1618,"11":640,
+  "12":866,"13":184,"14":659,"15":340,"16":280,"17":2140,"18":447,"19":3105,"20":270}};
+
+  var stations_points=[[14.1941535,48.2396743],[14.128766,48.0533652],[15.9511119,48.7569663],[16.3563526,48.2484782],[16.5848987032657,48.10499675],[9.7472924,47.5025779],
+  [11.3971372042211,47.26951525],[11.4606079,47.2088279],[12.1692134,47.582996],[13.0464806,47.7981346],[13.6274668,47.535202],[14.1431493,47.520529],[15.3174781,47.7717395],[16.5362158649556,47.83875775],[12.7681269,46.8298662],[15.4399235,46.9805075],
+  [15.9049632,46.8744727],[13.6703863,46.6036645],[14.3397639,46.6452006],[12.9920912,47.1028191],[15.6229118,48.2043985]];
+
+  function marker1(array){
+    for (var i = 0; i < array.length; i++) {
+      L.marker([array[i][1],array[i][0]]).bindPopup(stations.name[i] + '<br>' + 'Station Height: ' + stations.height[i] + 'm').addTo(map);
+    }}
+
+  marker1(stations_points);
+
+  var theName = '11-07-2018'; //default date rendered on first site visit
+
+  ///////////////////////////////////////////////////////////////////
+  //Plotly.d3.csv('file:///C:/Users/Hubert/bach_thesis/datasets/11_07_test.csv', function(err, rows){
+  Plotly.d3.csv('https://hubertbaginski.github.io//open_data_vis//data//final_concat_working.csv', function(err, rows){
+      function unpack(rows, key) {
+          return rows.map(function(row){
+            return row[key]; });
+      }
+
+      var allNames = unpack(rows, 'name'),
+          allDates = unpack(rows, 'date'),
+          allTimes = unpack(rows,'time'),
+          allTempC = unpack(rows,'temp_c'),
+          allTempP = unpack(rows,'temp_p'),
+          allRelHumid = unpack(rows,'rel_humid'),
+          allWindDirDegree = unpack(rows,'wind_direction_degree'),
+          allWindSpeedkmpH = unpack(rows,'wind_speed_km_per_h'),
+          allWSGDegree = unpack(rows,'WSG_degree'),
+          allWSGkmH = unpack(rows, "WSG_kmh"),
+          allNIpermA = unpack(rows, "N_I_per_mA"),
+          allLDredhPa = unpack(rows, "LDred_hPa"),
+          allLDstathPa = unpack(rows, "LDstat_hPa"),
+          allSOinPercent = unpack(rows, "SO_in_percent"),
+          listofNames = [],
+          currentName,
+          currentTime = [],
+          currentTempC = [],
+          currentTempP = [],
+          currentRelHumid = [],
+          currentWindSpeedkmpH = [],
+          currentWSGkmpH = [],
+          currentNIpermA = [],
+          currentLDredhPa = [],
+          currentLDstathPa = [],
+          currentSOinPercent = [];
+      for (var i=0; i<allNames.length; i++){
+        if(listofNames.indexOf(allNames[i]) === -1){
+          listofNames.push(allNames[i]);
+        }
+      }
+      function getStationData(chosenStation){
+        currentTime = [];
+        currentTempC = [];
+        currentTempP = [];
+        currentRelHumid = [];
+        currentWindSpeedkmpH = [];
+        currentWSGkmpH = [];
+        currentNIpermA = [];
+        currentLDredhPa = [];
+        currentLDstathPa = [];
+        currentSOinPercent = [];
+        for(var i=0; i<allNames.length;i++){
+          if(allNames[i] === chosenStation && allDates[i]=== theName){
+            currentTime.push(allTimes[i]);
+            currentTempC.push(allTempC[i]);
+            currentTempP.push(allTempP[i]);
+            currentRelHumid.push(allRelHumid[i]);
+            currentWindSpeedkmpH.push(allWindSpeedkmpH[i]);
+            currentWSGkmpH.push(allWSGkmH[i]);
+            currentNIpermA.push(allNIpermA[i]);
+            currentLDredhPa.push(allLDredhPa[i]);
+            currentLDstathPa.push(allLDstathPa[i]);
+            currentSOinPercent.push(allSOinPercent[i]);
+          }
+        }
+      };
+  // Default Station data
+      setBubblePlot('Aigen im Ennstal');
+      function setBubblePlot(chosenStation){
+        getStationData(chosenStation);
+        var traceN = {
+          x: currentTime,
+          y: currentTempC,
+          name: 'Temperature [°C]',
+          mode: 'lines+markers',
+          marker:{
+            size:6,
+            opacity:0.5
+          }
+        };
+        var traceTP = {
+          x:currentTime,
+          y: currentTempP,
+          name: 'Dew Point/ Taupunkt[°C]',
+          mode: 'lines'
+        };
+        var traceAverageWS = {
+          x:currentTime,
+          y: currentWindSpeedkmpH,
+          name: 'Average Wind Spped [km/h]',
+          mode: 'lines'
+        };
+        var tracePeakWS = {
+          x:currentTime,
+          y: currentWSGkmpH,
+          name: 'Peak Wind Spped [km/h]',
+          mode: 'lines'
+        };
+        var traceHumidity = {
+          x:currentTime,
+          y: currentRelHumid,
+          name: 'Relative Humidity [%]',
+          mode: 'lines'
+        };
+        var traceSO = {
+          x:currentTime,
+          y: currentSOinPercent,
+          name: 'Relative Sunshine Duration [%]',
+          mode: 'lines'
+        };
+        var data = [traceN, traceTP, traceAverageWS,tracePeakWS];
+        var data1 = [traceHumidity, traceSO];
+        var layout = {
+          title:'Data collected on ' + theName,
+
+              autosize: false,
+              "xaxis":{
+                "title": "<b>Time</b>"
+              }};
+        Plotly.newPlot('plotdiv', data, layout);
+        Plotly.newPlot('div2', data1, layout);
+      };
+      var innerContainer = document.querySelector('[data-num="0"'),
+      plotEl = innerContainer.querySelector('.plot'),
+      stationSelector = innerContainer.querySelector('.stationdata');
+
+      function assignOptions(textArray, selector) {
+        for (var i = 0; i < textArray.length;  i++) {
+            var currentOption = document.createElement('option');
+            currentOption.text = textArray[i];
+            selector.appendChild(currentOption);
+          }
+        }
+
+        assignOptions(listofNames, stationSelector);
+
+        function updateStation(){
+          setBubblePlot(stationSelector.value);
+      }
+
+      stationSelector.addEventListener('change', updateStation, false);
+    });
+  /////////////////////////////////////////////////////////////////////////////
+  // User selects a date he wants to innspect through textfield input
+
+  function outputdate() {
+    var a,theName;
+    a=document.getElementById("form1");
+    theName=a.elements["date"].value;
+
+    Plotly.d3.csv('file:///C:/Users/Hubert/bach_thesis/datasets/final_concat_working.csv', function(err, rows){
+        function unpack(rows, key) {
+            return rows.map(function(row){
+              return row[key]; });
+        }
+
+        var allNames = unpack(rows, 'name'),
+            allDates = unpack(rows, 'date'),
+            allTimes = unpack(rows,'time'),
+            allTempC = unpack(rows,'temp_c'),
+            allTempP = unpack(rows,'temp_p'),
+            allRelHumid = unpack(rows,'rel_humid'),
+            allWindDirDegree = unpack(rows,'wind_direction_degree'),
+            allWindSpeedkmpH = unpack(rows,'wind_speed_km_per_h'),
+            allWSGDegree = unpack(rows,'WSG_degree'),
+            allWSGkmH = unpack(rows, "WSG_kmh"),
+            allNIpermA = unpack(rows, "N_I_per_mA"),
+            allLDredhPa = unpack(rows, "LDred_hPa"),
+            allLDstathPa = unpack(rows, "LDstat_hPa"),
+            allSOinPercent = unpack(rows, "SO_in_percent"),
+            listofNames = [],
+            currentName,
+            currentTime = [],
+            currentTempC = [],
+            currentTempP = [],
+            currentRelHumid = [],
+            currentWindSpeedkmpH = [],
+            currentWSGkmpH = [],
+            currentNIpermA = [],
+            currentLDredhPa = [],
+            currentLDstathPa = [],
+            currentSOinPercent = [];
+
+        function getStationData(chosenStation){
+          currentTime = [];
+          currentTempC = [];
+          currentTempP = [];
+          currentRelHumid = [];
+          currentWindSpeedkmpH = [];
+          currentWSGkmpH = [];
+          currentNIpermA = [];
+          currentLDredhPa = [];
+          currentLDstathPa = [];
+          currentSOinPercent = [];
+          for(var i=0; i<allNames.length;i++){
+            if(allNames[i] === chosenStation && allDates[i]=== theName){
+              currentTime.push(allTimes[i]);
+              currentTempC.push(allTempC[i]);
+              currentTempP.push(allTempP[i]);
+              currentRelHumid.push(allRelHumid[i]);
+              currentWindSpeedkmpH.push(allWindSpeedkmpH[i]);
+              currentWSGkmpH.push(allWSGkmH[i]);
+              currentNIpermA.push(allNIpermA[i]);
+              currentLDredhPa.push(allLDredhPa[i]);
+              currentLDstathPa.push(allLDstathPa[i]);
+              currentSOinPercent.push(allSOinPercent[i]);
+            }
+          }
+        };
+    // Default Station data
+        setBubblePlot('Aigen im Ennstal');
+        function setBubblePlot(chosenStation){
+          getStationData(chosenStation);
+          var traceN = {
+            x: currentTime,
+            y: currentTempC,
+            name: 'Temperature [°C]',
+            mode: 'lines+markers',
+            marker:{
+              size:6,
+              opacity:0.5
+            }
+          };
+          var traceTP = {
+            x:currentTime,
+            y: currentTempP,
+            name: 'Dew Point/ Taupunkt[°C]',
+            mode: 'lines'
+          };
+          var traceAverageWS = {
+            x:currentTime,
+            y: currentWindSpeedkmpH,
+            name: 'Average Wind Spped [km/h]',
+            mode: 'lines'
+          };
+          var tracePeakWS = {
+            x:currentTime,
+            y: currentWSGkmpH,
+            name: 'Peak Wind Spped [km/h]',
+            mode: 'lines'
+          };
+          var traceHumidity = {
+            x:currentTime,
+            y: currentRelHumid,
+            name: 'Relative Humidity [%]',
+            mode: 'lines'
+          };
+          var traceSO = {
+            x:currentTime,
+            y: currentSOinPercent,
+            name: 'Relative Sunshine Duration [%]',
+            mode: 'lines'
+          };
+          var data = [traceN, traceTP, traceAverageWS,tracePeakWS];
+          var data1 = [traceHumidity, traceSO];
+          var layout = {
+            title:'Data collected on ' + theName,
+
+                autosize: false,
+                "xaxis":{
+                  "title": "<b>Time</b>"
+                }};
+          Plotly.newPlot('plotdiv', data, layout);
+          Plotly.newPlot('div2', data1, layout);
+        };
+        var innerContainer = document.querySelector('[data-num="0"'),
+        plotEl = innerContainer.querySelector('.plot'),
+        stationSelector = innerContainer.querySelector('.stationdata');
+
+        function assignOptions(textArray, selector) {
+          for (var i = 0; i < textArray.length;  i++) {
+              var currentOption = document.createElement('option');
+              currentOption.text = textArray[i];
+              selector.appendChild(currentOption);
+            }
+          }
+
+          assignOptions(listofNames, stationSelector);
+
+          function updateStation(){
+            setBubblePlot(stationSelector.value);
+        }
+
+        stationSelector.addEventListener('change', updateStation, false);
+      });
+
+
+  }
+
+
+
+
+  function download(){
+    $.ajax({
+            type: "GET",
+            url: 'http://127.0.0.1:5000/live_wetter',
+            dataType: "html",
+            success: function(msg) {
+                console.log(msg);
+                $("#swiss").html(msg);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+  function outputlive() {
+    var a,theName;
+
+    Plotly.d3.csv('file:///C:/Users/Hubert/bach_thesis/datasets/live_wetter.csv', function(err, rows){
+        function unpack(rows, key) {
+            return rows.map(function(row){
+              return row[key]; });
+        }
+
+        var allNames = unpack(rows, 'name'),
+            allDates = unpack(rows, 'date'),
+            allTimes = unpack(rows,'time'),
+            allTempC = unpack(rows,'temp_c'),
+            allTempP = unpack(rows,'temp_p'),
+            allRelHumid = unpack(rows,'rel_humid'),
+            allWindDirDegree = unpack(rows,'wind_direction_degree'),
+            allWindSpeedkmpH = unpack(rows,'wind_speed_km_per_h'),
+            allWSGDegree = unpack(rows,'WSG_degree'),
+            allWSGkmH = unpack(rows, "WSG_kmh"),
+            allNIpermA = unpack(rows, "N_I_per_mA"),
+            allLDredhPa = unpack(rows, "LDred_hPa"),
+            allLDstathPa = unpack(rows, "LDstat_hPa"),
+            allSOinPercent = unpack(rows, "SO_in_percent"),
+            listofNames = [],
+            currentName,
+            currentTime = [],
+            currentTempC = [],
+            currentTempP = [],
+            currentRelHumid = [],
+            currentWindSpeedkmpH = [],
+            currentWSGkmpH = [],
+            currentNIpermA = [],
+            currentLDredhPa = [],
+            currentLDstathPa = [],
+            currentSOinPercent = [];
+
+
+        function getStationData(chosenStation){
+          currentTime = [];
+          currentTempC = [];
+          currentTempP = [];
+          currentRelHumid = [];
+          currentWindSpeedkmpH = [];
+          currentWSGkmpH = [];
+          currentNIpermA = [];
+          currentLDredhPa = [];
+          currentLDstathPa = [];
+          currentSOinPercent = [];
+          theName = allDates[0];
+          for(var i=0; i<allNames.length;i++){
+            if(allNames[i] === chosenStation && allDates[i]=== theName){
+              currentTime.push(allTimes[i]);
+              currentTempC.push(allTempC[i]);
+              currentTempP.push(allTempP[i]);
+              currentRelHumid.push(allRelHumid[i]);
+              currentWindSpeedkmpH.push(allWindSpeedkmpH[i]);
+              currentWSGkmpH.push(allWSGkmH[i]);
+              currentNIpermA.push(allNIpermA[i]);
+              currentLDredhPa.push(allLDredhPa[i]);
+              currentLDstathPa.push(allLDstathPa[i]);
+              currentSOinPercent.push(allSOinPercent[i]);
+            }
+          }
+        };
+    // Default Station data
+        setBubblePlot('Aigen im Ennstal');
+        function setBubblePlot(chosenStation){
+          getStationData(chosenStation);
+          var traceN = {
+            x: currentTime,
+            y: currentTempC,
+            name: 'Temperature [°C]',
+            mode: 'lines+markers',
+            marker:{
+              size:6,
+              opacity:0.5
+            }
+          };
+          var traceTP = {
+            x:currentTime,
+            y: currentTempP,
+            name: 'Dew Point/ Taupunkt[°C]',
+            mode: 'lines+markers'
+          };
+          var traceAverageWS = {
+            x:currentTime,
+            y: currentWindSpeedkmpH,
+            name: 'Average Wind Spped [km/h]',
+            mode: 'lines+markers'
+          };
+          var tracePeakWS = {
+            x:currentTime,
+            y: currentWSGkmpH,
+            name: 'Peak Wind Spped [km/h]',
+            mode: 'lines+markers'
+          };
+          var traceHumidity = {
+            x:currentTime,
+            y: currentRelHumid,
+            name: 'Relative Humidity [%]',
+            mode: 'lines+markers'
+          };
+          var traceSO = {
+            x:currentTime,
+            y: currentSOinPercent,
+            name: 'Relative Sunshine Duration [%]',
+            mode: 'lines+markers'
+          };
+          var data = [traceN, traceTP, traceAverageWS,tracePeakWS];
+          var data1 = [traceHumidity, traceSO];
+          var layout = {
+            title:'Data collected on ' + theName,
+
+                autosize: false,
+                "xaxis":{
+                  "title": "<b>Time</b>"
+                }};
+          Plotly.newPlot('plotdiv', data, layout);
+          Plotly.newPlot('div2', data1, layout);
+        };
+        var innerContainer = document.querySelector('[data-num="0"'),
+        plotEl = innerContainer.querySelector('.plot'),
+        stationSelector = innerContainer.querySelector('.stationdata');
+
+        function assignOptions(textArray, selector) {
+          for (var i = 0; i < textArray.length;  i++) {
+              var currentOption = document.createElement('option');
+              currentOption.text = textArray[i];
+              selector.appendChild(currentOption);
+            }
+          }
+
+          assignOptions(listofNames, stationSelector);
+
+          function updateStation(){
+            setBubblePlot(stationSelector.value);
+        }
+
+        stationSelector.addEventListener('change', updateStation, false);
+      });
+
+
+  }
+  </script>
+  <p id="demo"></p>
+  </body>
+  </html>
