@@ -32,7 +32,7 @@
 
 <h2 class="main3_text" style="font-family: segoe ui light;">Vienna's Public WLAN Distribution per District</h2>
 <div id="map3" style="width: 700px; height: 450px;border: thin solid black;" class="main3"></div>
-<div id="legend_map2" class="legend5" style="z-index=2;">
+<div id="legend_map2" class="legend5" style="z-index=80;">
   <h4 style="font-family: segoe ui light;">Number of AP</h4>
   <div style="font-family: segoe ui;"><span style='background-color: #800080'></span>> 18</div>
     <div style="font-family: segoe ui;"><span style='background-color: #A04060'></span>16 - 18</div>
@@ -60,7 +60,7 @@ function closeNav() {
   var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
   })
-
+/*
   var black =  L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
               attribution: 'Stamen'
             })
@@ -72,7 +72,7 @@ L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
           L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
                       attribution: 'Stamen'
                     }).addTo(map2);
-
+*/
 
 function marker1(array){
   for (var i = 0; i < array.length; i++) {
