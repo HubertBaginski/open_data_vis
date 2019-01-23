@@ -59,7 +59,8 @@ function closeNav() {
 
   var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-  })
+  }).addTo(map3);
+
 /*
   var black =  L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
               attribution: 'Stamen'
