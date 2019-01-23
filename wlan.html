@@ -1,8 +1,110 @@
+<!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="https://hubertbaginski.github.io//open_data_vis//dist//leaflet//leaflet.css">
+  <script src="https://hubertbaginski.github.io//open_data_vis//dist//leaflet//leaflet.js"></script>
+  <script src="https://hubertbaginski.github.io//open_data_vis//dist//choropleth//dist//choropleth.js"></script>
+  <script src="https://hubertbaginski.github.io//open_data_vis//dist//leaflet-heat.js"></script>
+  <script src="https://hubertbaginski.github.io//open_data_vis//dist//leaflet-providers-master/leaflet-providers.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>something new</h1>
-<p>Did it work?</p>
+
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a style="font-family: segoe ui;">Dashboards</a>
+  <a href="https://hubertbaginski.github.io//open_data_vis//index.html" style="font-family: segoe ui light;">Schools</a>
+  <a href="https://hubertbaginski.github.io//open_data_vis//wlan.html" style="font-family: segoe ui light;">WLAN</a>
+  <a href="https://hubertbaginski.github.io//open_data_vis//wetter.html" style="font-family: segoe ui light;">Weather</a>
+  <a href="https://hubertbaginski.github.io//open_data_vis//rent.html" style="font-family: segoe ui light;">Rent Prices</a>
+</div>
+
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+
+<h2 class="main_text" style="font-family: segoe ui light;">Vienna's Public WLAN Heatmap</h2>
+<div id="map" style="width: 700px; height: 450px; border: thin solid black;" class="main"></div>
+
+<h2 class="main2_text" style="font-family: segoe ui light;">Vienna's Public WLAN Coverage</h2>
+<div id="map2" style="width: 700px; height: 450px; border: thin solid black;" class="main2"></div>
+
+<h2 class="main3_text" style="font-family: segoe ui light;">Vienna's Public WLAN Distribution per District</h2>
+<div id="map3" style="width: 700px; height: 450px;border: thin solid black;" class="main3"></div>
+<div id="legend_map2" class="legend5">
+  <h4 style="font-family: segoe ui light;">Number of AP</h4>
+  <div style="font-family: segoe ui;"><span style='background-color: #800080'></span>> 18</div>
+    <div style="font-family: segoe ui;"><span style='background-color: #A04060'></span>16 - 18</div>
+    <div style="font-family: segoe ui;"><span style='background-color: #C08040'></span>12 - 15</div>
+    <div style="font-family: segoe ui;"><span style='background-color: #DFBF20'></span>6 - 11</div>
+    <div style="font-family: segoe ui;"><span style='background-color: #FFFF00'></span>< 6</div>
+</div>
+
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+<script>
+
+  var map = L.map('map').setView([48.20801277736036,16.371379750152176], 14);
+  var map2 = L.map('map2').setView([48.20801277736036,16.371379750152176], 14);
+  var map3 = L.map('map3').setView([48.20801277736036,16.371379750152176], 11);
+
+
+  var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  })
+
+  var black =  L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
+              attribution: 'Stamen'
+            })
+black.addTo(map3);
+L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
+            attribution: 'Stamen'
+          }).addTo(map);
+
+          L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
+                      attribution: 'Stamen'
+                    }).addTo(map2);
+
+
+function marker1(array){
+  for (var i = 0; i < array.length; i++) {
+			L.circle([array[i][0],array[i][1]], 100).addTo(map2);
+}}
+var asd;
+fetch('https://hubertbaginski.github.io//open_data_vis//data///wlanpoints.json')
+  .then(res => res.json())
+  .then(data => asd = data)
+  .then(() => L.heatLayer(asd, {radius: 12,blur:20,maxZoom:11}).addTo(map))
+  .then(() => marker1(asd))
+
+
+  var asd;
+  fetch('https://hubertbaginski.github.io//open_data_vis//data///geojson_with_wlan_per_dist.json')
+    .then(res => res.json())
+    .then(data => asd = data)
+    // add it to the map
+    .then(() => L.choropleth(asd, {
+        valueProperty: 'num_schools',
+        scale: ['yellow', 'purple'],
+        steps: 5,
+        mode: 'q',
+        style: {
+          color: '#fff',
+          weight: 1,
+          fillOpacity: 1
+        },
+        onEachFeature: function (feature, layer) {
+          layer.bindPopup(feature.properties.BEZNR + '. District' + '<br>' + '<b>' + feature.properties.NAMEK + '</b>' + '<br>'+ '<b>' + feature.properties.num_schools.toLocaleString() + '<b>'+ ' Public WLAN Access Points')
+        }
+      }).addTo(map3))
+</script>
 </body>
 </html>
