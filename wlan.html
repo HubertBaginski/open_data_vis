@@ -32,14 +32,7 @@
 
 <h2 class="main3_text" style="font-family: segoe ui light;">Vienna's Public WLAN Distribution per District</h2>
 <div id="map3" style="width: 700px; height: 450px;border: thin solid black;" class="main3"></div>
-<div id="legend_map2" class="legend5" style="z-index=80;">
-  <h4 style="font-family: segoe ui light;">Number of AP</h4>
-  <div style="font-family: segoe ui;"><span style='background-color: #800080'></span>> 18</div>
-    <div style="font-family: segoe ui;"><span style='background-color: #A04060'></span>16 - 18</div>
-    <div style="font-family: segoe ui;"><span style='background-color: #C08040'></span>12 - 15</div>
-    <div style="font-family: segoe ui;"><span style='background-color: #DFBF20'></span>6 - 11</div>
-    <div style="font-family: segoe ui;"><span style='background-color: #FFFF00'></span>< 6</div>
-</div>
+
 
 <script>
 function openNav() {
@@ -107,5 +100,13 @@ fetch('https://hubertbaginski.github.io//open_data_vis//data///wlanpoints.json')
         }
       }).addTo(map3))
 </script>
+<div id="legend_map2" class="legend5" style="z-index=80;">
+  <h4 style="font-family: segoe ui light;">Number of AP</h4>
+  <div style="font-family: segoe ui;"><span style='background-color: #800080'></span>> 18</div>
+    <div style="font-family: segoe ui;"><span style='background-color: #A04060'></span>16 - 18</div>
+    <div style="font-family: segoe ui;"><span style='background-color: #C08040'></span>12 - 15</div>
+    <div style="font-family: segoe ui;"><span style='background-color: #DFBF20'></span>6 - 11</div>
+    <div style="font-family: segoe ui;"><span style='background-color: #FFFF00'></span>< 6</div>
+</div>
 </body>
 </html>
