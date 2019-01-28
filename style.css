@@ -198,6 +198,6 @@ color: #777;
 p { margin-top:0;}
 
 .first {
-  columns: 250px 2;
+  columns: 300px 1;
   column-rule: 1px dotted #ccc;;
 }
