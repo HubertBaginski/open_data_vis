@@ -15,6 +15,7 @@
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <a style="font-family: segoe ui;">Dashboards</a>
+  <a href="https://hubertbaginski.github.io//open_data_vis//about.html" style="font-family: segoe ui light;">About</a>
   <a href="https://hubertbaginski.github.io//open_data_vis//index.html" style="font-family: segoe ui light;">Schools</a>
   <a href="https://hubertbaginski.github.io//open_data_vis//wlan.html" style="font-family: segoe ui light;">WLAN</a>
   <a href="https://hubertbaginski.github.io//open_data_vis//wetter.html" style="font-family: segoe ui light;">Weather</a>
@@ -227,7 +228,7 @@ fetch('https://hubertbaginski.github.io//open_data_vis//data//mapbox_tileset_ave
   .then(data => asd = data)
   // add it to the map
   .then(() => L.choropleth(asd, {
-      valueProperty: 'price',
+      valueProperty: 'num_schools',
       scale: ['green', 'blue', 'red'],
       steps: 5,
       mode: 'q',
@@ -237,7 +238,7 @@ fetch('https://hubertbaginski.github.io//open_data_vis//data//mapbox_tileset_ave
         fillOpacity: 1
       },
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(feature.properties.BEZNR + '. District' + '<br>' + '<b>' + feature.properties.NAMEK + '</b>' + '<br>'+ feature.properties.price.toLocaleString() + '€ rent per m²')
+        layer.bindPopup(feature.properties.BEZNR + '. District' + '<br>' + '<b>' + feature.properties.NAMEK + '</b>' + '<br>'+ feature.properties.num_schools.toLocaleString() + '€ rent per m²')
       }
     }).addTo(map2))
 
