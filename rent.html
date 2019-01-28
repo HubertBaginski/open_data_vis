@@ -237,7 +237,7 @@ fetch('https://hubertbaginski.github.io//open_data_vis//data//mapbox_tileset_ave
         fillOpacity: 1
       },
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(feature.properties.BEZNR + '. District' + '<br>' + '<b>' + feature.properties.NAMEK + '</b>' + '<br>'+ feature.properties.num_schools.toLocaleString() + '€ rent per m²')
+        layer.bindPopup(feature.properties.BEZNR + '. District' + '<br>' + '<b>' + feature.properties.NAMEK + '</b>' + '<br>'+ feature.properties.price.toLocaleString() + '€ rent per m²')
       }
     }).addTo(map2))
 
