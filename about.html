@@ -20,12 +20,16 @@
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
 
 
-<div class="columns">
-  <p class="first">This website is the result of the bachelor thesis and it focuses on the visualization of Open Data. The idea was to enable Visual Data Analysis for the common citizen, i.e. a user with little or no knowledge in neither programming nor HTML
-    should be able to deduct meaningful information through the visualized data. In order to acheive this, open datasets were discovered via the Austrian Open Data Portal,
-  <a href="https://www.data.gv.at/suche/">data.gv.at</a>, and following a workflow the necessary data-processing and visualization was executed. The final results can be seen on this website, and the individual dashboards are accessible via the sidebar.
-  The produced code can be found on <a href="https://github.com/HubertBaginski/open_data_vis">GitHub</a>!
-  </p>
-  <p>
-  </p>
-</div>
+<p>This website is the result of the bachelor thesis and it focuses on the visualization of Open Data. The idea was to enable Visual Data Analysis for the common citizen, i.e. a user with little or no knowledge in neither programming nor HTML
+  should be able to deduct meaningful information through the visualized data. In order to acheive this, open datasets were discovered via the Austrian Open Data Portal,
+<a href="https://www.data.gv.at/suche/">data.gv.at</a>, and following a workflow the necessary data-processing and visualization was executed. The final results can be seen on this website, and the individual dashboards are accessible via the sidebar.
+The produced code can be found on <a href="https://github.com/HubertBaginski/open_data_vis">GitHub</a>!</p>
+
+  <script>
+  function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+  }
+  function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+  }
+  </script>
