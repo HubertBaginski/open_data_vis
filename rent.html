@@ -227,7 +227,7 @@ fetch('https://hubertbaginski.github.io//open_data_vis//data//mapbox_tileset_ave
   .then(data => asd = data)
   // add it to the map
   .then(() => L.choropleth(asd, {
-      valueProperty: 'num_schools',
+      valueProperty: 'price',
       scale: ['green', 'blue', 'red'],
       steps: 5,
       mode: 'q',
