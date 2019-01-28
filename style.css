@@ -194,3 +194,10 @@ border-radius: 5px;
 margin: 0 0 5px;
 color: #777;
 }
+
+p { margin-top:0;}
+
+.first {
+  columns: 250px 2;
+  column-rule: 1px dotted #ccc;;
+}
