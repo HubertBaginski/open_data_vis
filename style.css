@@ -95,7 +95,7 @@
   padding: 5px;
   position: absolute;
   left:900px; top:350px; bottom:500;
-  z-index: 1;
+  z-index:1000;
 }
 
 .legend h4 {
@@ -118,7 +118,7 @@
   padding: 5px;
   position: absolute;
   left:865px; top:420px; bottom:500;
-  z-index: 1;
+  z-index:1000;
 }
 
 .legend3 h4 {
@@ -166,7 +166,7 @@
   padding: 5px;
   position: absolute;
   left:1740px; top:380px; bottom:500;
-  z-index: 1;
+  z-index:1000;
 }
 
 .legend1 h4 {
