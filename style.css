@@ -142,7 +142,7 @@
   padding: 5px;
   position: absolute;
   left:1750px; top:875px; bottom:500;
-  z-index: 1;
+  z-index: 1000;
 }
 
 .legend5 h4 {
