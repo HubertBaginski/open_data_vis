@@ -60,7 +60,7 @@ function closeNav() {
 <script>
 
   var map = L.map('map').setView([48.20801277736036,16.371379750152176], 12);
-  var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  var tiles = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://openstreetmap.org"">OpenStreetMap</a> contributors',
   }).addTo(map);
   L.tileLayer('https://tile.stamen.com/toner/{z}/{x}/{y}.png', {
@@ -69,7 +69,7 @@ function closeNav() {
 
 
   var map2 = L.map('map2').setView([48.20801277736036,16.371379750152176], 11);
-  L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
+  L.tileLayer('https://tile.stamen.com/toner/{z}/{x}/{y}.png', {
             attribution: 'Stamen'
           }).addTo(map2);
 
